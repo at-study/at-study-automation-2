@@ -4,12 +4,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import at.study.redmine.db.requests.UserRequests;
 import at.study.redmine.model.user.Language;
 import at.study.redmine.model.user.MailNotification;
 import at.study.redmine.model.user.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import static at.study.redmine.utils.StringUtils.randomEnglishString;
 import static at.study.redmine.utils.StringUtils.randomHexString;
@@ -18,6 +20,7 @@ import static org.apache.commons.codec.digest.DigestUtils.sha1Hex;
 @NoArgsConstructor
 @Getter
 @Setter
+@Accessors(chain = true)
 public class User extends CreatableEntity implements Creatable<User> {
 
     private String login = "AutoLogin" + randomEnglishString(10);
@@ -45,7 +48,19 @@ public class User extends CreatableEntity implements Creatable<User> {
 
     @Override
     public User create() {
-        // TODO: Реализовать с помощью запроса к базе данных
-        throw new UnsupportedOperationException();
+        new UserRequests().create(this);
+        tokens.forEach(t -> t.setUserId(id));
+        tokens.forEach(Token::create);
+        emails.forEach(e -> e.setUserId(id));
+        emails.forEach(Email::create);
+        return this;
+    }
+
+    public void delete() {
+        new UserRequests().delete(this.id);
+    }
+
+    public void update() {
+        new UserRequests().update(this.id, this);
     }
 }
