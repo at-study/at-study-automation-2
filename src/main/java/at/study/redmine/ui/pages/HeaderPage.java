@@ -2,10 +2,11 @@ package at.study.redmine.ui.pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-import at.study.redmine.ui.BrowserManager;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class HeaderPage extends Page {
 
     private WebElement homePage;
@@ -14,7 +15,8 @@ public class HeaderPage extends Page {
 
     private WebElement projects;
 
-    private WebElement administration;
+    @FindBy(xpath = "//div[@id='top-menu']//a[@class='administration']")
+    public WebElement administration;
 
     private WebElement help;
 
@@ -24,7 +26,4 @@ public class HeaderPage extends Page {
     @FindBy(xpath = "//div[@id='account']//a[@class='my-account']")
     public WebElement myAccount;
 
-    public HeaderPage() {
-        PageFactory.initElements(BrowserManager.getBrowser().getDriver(), this);
-    }
 }

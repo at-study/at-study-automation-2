@@ -2,11 +2,12 @@ package at.study.redmine.ui.pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import at.study.redmine.model.User;
-import at.study.redmine.ui.BrowserManager;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class LoginPage extends Page {
 
     @FindBy(xpath = "//input[@id='username']")
@@ -17,11 +18,6 @@ public class LoginPage extends Page {
 
     @FindBy(xpath = "//input[@id='login-submit']")
     private WebElement signInButton;
-
-
-    public LoginPage() {
-        PageFactory.initElements(BrowserManager.getBrowser().getDriver(), this);
-    }
 
     public void login(String login, String password) {
         userNameInput.sendKeys(login);
