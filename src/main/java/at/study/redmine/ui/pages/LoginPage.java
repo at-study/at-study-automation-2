@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import at.study.redmine.model.User;
+import io.qameta.allure.Step;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +20,7 @@ public class LoginPage extends Page {
     @FindBy(xpath = "//input[@id='login-submit']")
     private WebElement signInButton;
 
+    @Step("Вход в систему пользователем с логином {0} и паролем {1}")
     public void login(String login, String password) {
         userNameInput.sendKeys(login);
         passwordInput.sendKeys(password);

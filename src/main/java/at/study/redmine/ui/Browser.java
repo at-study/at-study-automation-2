@@ -10,6 +10,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import at.study.redmine.property.Property;
+import io.qameta.allure.Attachment;
 import lombok.Getter;
 
 @Getter
@@ -39,6 +40,7 @@ public class Browser {
         getDriver().get(Property.getStringProperty("url") + uri);
     }
 
+    @Attachment("Скриншот браузера")
     public byte[] takeScreenshot() {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }

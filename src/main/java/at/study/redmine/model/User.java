@@ -8,6 +8,7 @@ import at.study.redmine.db.requests.UserRequests;
 import at.study.redmine.model.user.Language;
 import at.study.redmine.model.user.MailNotification;
 import at.study.redmine.model.user.Status;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -47,6 +48,7 @@ public class User extends CreatableEntity implements Creatable<User> {
     }
 
     @Override
+    @Step("Создан пользователь в БД")
     public User create() {
         new UserRequests().create(this);
         tokens.forEach(t -> t.setUserId(id));

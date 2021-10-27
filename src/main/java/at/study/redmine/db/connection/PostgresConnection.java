@@ -12,6 +12,8 @@ import java.util.Properties;
 
 import org.postgresql.util.PSQLException;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 
 import static at.study.redmine.property.Property.getIntegerProperty;
@@ -45,12 +47,14 @@ public class PostgresConnection implements DatabaseConnection {
 
     @Override
     @SneakyThrows
+    @Step("Выполнение SQL-запроса")
     public List<Map<String, Object>> executeQuery(String query, Object... parameters) {
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             for (int i = 0; i < parameters.length; i++) {
                 stmt.setObject(i + 1, parameters[i]);
             }
+            Allure.addAttachment("SQL-запрос", stmt.toString());
             ResultSet rs = stmt.executeQuery();
 
             List<Map<String, Object>> result = new ArrayList<>();
@@ -64,6 +68,7 @@ public class PostgresConnection implements DatabaseConnection {
                 }
                 result.add(resultRow);
             }
+            Allure.addAttachment("SQL-ответ", result.toString());
             return result;
         } catch (PSQLException exc) {
             if (exc.getMessage().equals("Запрос не вернул результатов.")) {

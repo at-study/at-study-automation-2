@@ -8,6 +8,7 @@ import at.study.redmine.ui.pages.AdministrationPage;
 import at.study.redmine.ui.pages.HeaderPage;
 import at.study.redmine.ui.pages.LoginPage;
 import at.study.redmine.ui.pages.UserTablePage;
+import io.qameta.allure.Step;
 
 import static at.study.redmine.ui.pages.Page.getPage;
 
@@ -19,6 +20,7 @@ public class BaseUITest {
     protected AdministrationPage administrationPage;
     protected UserTablePage userTablePage;
 
+    @Step("Открываю браузер на главной странице")
     protected void openBrowser() {
         browser = BrowserManager.getBrowser();
         headerPage = getPage(HeaderPage.class);
@@ -27,8 +29,9 @@ public class BaseUITest {
         userTablePage = getPage(UserTablePage.class);
     }
 
-    @AfterMethod
+    @AfterMethod(description = "Остановка браузера")
     public void tearDown() {
+        browser.takeScreenshot();
         BrowserManager.removeBrowser();
     }
 }

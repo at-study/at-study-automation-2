@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.testng.Assert;
+import at.study.redmine.allure.asserts.AllureAssert;
+import io.qameta.allure.Step;
 
 public class CompareUtils {
 
@@ -18,16 +19,18 @@ public class CompareUtils {
     };
     private static final Comparator<String> DATE_ASC_COMPARATOR = DATE_DESC_COMPARATOR.reversed();
 
+    @Step("Проверка сортировки списка дат по убыванию")
     public static void assertListSortedByDateDesc(List<String> dates) {
         List<String> sortedDates = new ArrayList<>(dates);
         sortedDates.sort(DATE_DESC_COMPARATOR);
-        Assert.assertEquals(dates, sortedDates);
+        AllureAssert.assertEquals(dates, sortedDates);
     }
 
+    @Step("Проверка сортировки списка дат по возрастанию")
     public static void assertListSortedByDateAsc(List<String> dates) {
         List<String> sortedDates = new ArrayList<>(dates);
         sortedDates.sort(DATE_ASC_COMPARATOR);
-        Assert.assertEquals(dates, sortedDates);
+        AllureAssert.assertEquals(dates, sortedDates);
     }
 
 
