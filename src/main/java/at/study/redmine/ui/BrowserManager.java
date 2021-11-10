@@ -20,7 +20,7 @@ public class BrowserManager {
     }
 
     public static void removeBrowser() {
-        browser.getDriver().close();
+        browser.getDriver().quit();
         browser = null;
     }
 
