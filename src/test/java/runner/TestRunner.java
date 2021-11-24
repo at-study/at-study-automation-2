@@ -24,7 +24,7 @@ import cucumber.api.testng.PickleEventWrapper;
         },
         glue = {"steps"},
         features = "src/test/resources/features",
-        tags = {"@ui and not @blocked"}
+        tags = {"@ui"}
 )
 public class TestRunner extends AbstractTestNGCucumberTests implements ITest {
 
@@ -39,7 +39,7 @@ public class TestRunner extends AbstractTestNGCucumberTests implements ITest {
         super.runScenario(pickleWrapper, featureWrapper);
     }
 
-    @DataProvider
+    @DataProvider(parallel = true)
     @Override
     public Object[][] scenarios() {
         System.out.println("Total scenarions: " + super.scenarios().length);
