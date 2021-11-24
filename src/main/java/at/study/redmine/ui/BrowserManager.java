@@ -1,27 +1,25 @@
 package at.study.redmine.ui;
 
 public class BrowserManager {
-
-    // TODO: Использовать ThreadLocal
-    private static Browser browser;
+    private static ThreadLocal<Browser> browser = new ThreadLocal<>();
 
     public static Browser getBrowser() {
-        if (browser == null) {
-            browser = new Browser();
+        if (browser.get() == null) {
+            browser.set(new Browser());
         }
-        return browser;
+        return browser.get();
     }
 
     public static Browser getBrowser(String uri) {
-        if (browser == null) {
-            browser = new Browser(uri);
+        if (browser.get() == null) {
+            browser.set(new Browser(uri));
         }
-        return browser;
+        return browser.get();
     }
 
     public static void removeBrowser() {
-        browser.getDriver().quit();
-        browser = null;
+        browser.get().getDriver().quit();
+        browser.set(null);
     }
 
 }
